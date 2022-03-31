@@ -10,13 +10,13 @@ dependencies:
   flutter:
     sdk: flutter
 
-  logging: ^1.0.1
+  logging: ^1.0.2
 
-  http: ^0.13.3
+  http: ^0.13.4
 
-  font_awesome_flutter: ^9.1.0
+  font_awesome_flutter: ^10.1.0
   animated_text_kit: ^4.2.1
-  google_fonts: ^2.1.0
+  google_fonts: ^2.3.1
   recase: ^4.0.0
   flutter_swiper_null_safety: ^1.0.2
 

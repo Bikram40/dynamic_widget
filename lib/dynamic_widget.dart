@@ -211,8 +211,6 @@ abstract class WidgetParser {
 
 abstract class ClickListener {
   void onClicked(String? event, {dynamic data});
-
-  TextEditingController getTextEditingController(String? data);
 }
 
 class NonResponseWidgetClickListener implements ClickListener {
