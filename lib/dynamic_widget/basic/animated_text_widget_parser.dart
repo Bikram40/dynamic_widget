@@ -2,7 +2,6 @@ import 'dart:core';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:dynamic_widget/dynamic_widget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../utils.dart';
@@ -45,28 +44,69 @@ List<Map<String, dynamic>> exportAnimatedTextes(
     List<AnimatedText> animatedTexts) {
   List<Map<String, dynamic>> rt = [];
   animatedTexts.forEach((element) {
-    if (element.runtimeType == ColorizeAnimatedText) {
-      rt.add(<String, dynamic>{
-        "type": element.runtimeType.toString(),
-        "data": element.text,
-        "colors": exportColorList((element as ColorizeAnimatedText).colors),
-        "style": exportTextStyle(element.textStyle),
-        "textAlign": element.textAlign != null
-            ? exportTextAlign(element.textAlign)
-            : "start",
-        "duration": element.duration.inMilliseconds,
-      });
-    } else {
-      rt.add(<String, dynamic>{
-        "type": element.runtimeType.toString(),
-        "data": element.text,
-        "colors": null,
-        "style": exportTextStyle(element.textStyle),
-        "textAlign": element.textAlign != null
-            ? exportTextAlign(element.textAlign)
-            : "start",
-        "duration": element.duration.inMilliseconds,
-      });
+    switch (element.runtimeType) {
+      case ColorizeAnimatedText:
+        rt.add(<String, dynamic>{
+          "type": element.runtimeType.toString(),
+          "data": element.text,
+          "colors": element.runtimeType == ColorizeAnimatedText
+              ? exportColorList((element as ColorizeAnimatedText).colors)
+              : null,
+          "textStyle": exportTextStyle(element.textStyle),
+          "textAlign": exportTextAlign(element.textAlign),
+          "duration": (element as ColorizeAnimatedText).speed.inMilliseconds,
+        });
+        break;
+      case RotateAnimatedText:
+      case FadeAnimatedText:
+      case ScaleAnimatedText:
+        rt.add(<String, dynamic>{
+          "type": element.runtimeType.toString(),
+          "data": element.text,
+          "colors": element.runtimeType == ColorizeAnimatedText
+              ? exportColorList((element as ColorizeAnimatedText).colors)
+              : null,
+          "textStyle": exportTextStyle(element.textStyle),
+          "textAlign": exportTextAlign(element.textAlign),
+          "duration": element.duration.inMilliseconds,
+        });
+        break;
+      case TyperAnimatedText:
+        rt.add(<String, dynamic>{
+          "type": element.runtimeType.toString(),
+          "data": element.text,
+          "textStyle": exportTextStyle(element.textStyle),
+          "textAlign": exportTextAlign(element.textAlign),
+          "duration": (element as TyperAnimatedText).speed.inMilliseconds,
+        });
+        break;
+      case TypewriterAnimatedText:
+        rt.add(<String, dynamic>{
+          "type": element.runtimeType.toString(),
+          "data": element.text,
+          "textStyle": exportTextStyle(element.textStyle),
+          "textAlign": exportTextAlign(element.textAlign),
+          "duration": (element as TypewriterAnimatedText).speed.inMilliseconds,
+        });
+        break;
+      case WavyAnimatedText:
+        rt.add(<String, dynamic>{
+          "type": element.runtimeType.toString(),
+          "data": element.text,
+          "textStyle": exportTextStyle(element.textStyle),
+          "textAlign": exportTextAlign(element.textAlign),
+          "duration": (element as WavyAnimatedText).speed.inMilliseconds,
+        });
+        break;
+      case FlickerAnimatedText:
+        rt.add(<String, dynamic>{
+          "type": element.runtimeType.toString(),
+          "data": element.text,
+          "textStyle": exportTextStyle(element.textStyle),
+          "textAlign": exportTextAlign(element.textAlign),
+          "duration": (element as FlickerAnimatedText).speed.inMilliseconds,
+        });
+        break;
     }
   });
 
