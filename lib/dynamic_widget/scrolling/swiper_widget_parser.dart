@@ -50,7 +50,7 @@ class SwiperWidget extends StatelessWidget {
   final double? viewportFraction;
   final bool? autoplay;
   final bool? pagination;
-  final List<Widget>? children;
+  List<Widget>? children;
   final double? scale;
 
   SwiperWidget(
