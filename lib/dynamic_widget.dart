@@ -3,7 +3,6 @@ library dynamic_widget;
 import 'dart:convert';
 
 import 'package:dynamic_widget/dynamic_widget/basic/align_widget_parser.dart';
-import 'package:dynamic_widget/dynamic_widget/basic/animated_text_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/appbar_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/aspectratio_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/basic/baseline_widget_parser.dart';
@@ -43,7 +42,6 @@ import 'dynamic_widget/basic/dynamic_widget_parser.dart';
 import 'dynamic_widget/basic/flexible_widget_parser.dart';
 import 'dynamic_widget/basic/overflowbox_widget_parser.dart';
 import 'dynamic_widget/basic/textfield_widget_parser.dart';
-import 'dynamic_widget/scrolling/swiper_widget_parser.dart';
 
 class DynamicWidgetBuilder {
   static final Logger log = Logger('DynamicWidget');
@@ -87,9 +85,7 @@ class DynamicWidgetBuilder {
     OverflowBoxWidgetParser(),
     ElevatedButtonParser(),
     DividerWidgetParser(),
-    AnimateTextWidgetParser(),
     BackdropFilterWidgetParser(),
-    SwiperWidgetParser(),
     TextFieldWidgetParser(),
     DynamicWidgetParser(),
     FlexibleWidgetParser(),
