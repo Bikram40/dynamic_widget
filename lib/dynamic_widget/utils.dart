@@ -227,9 +227,6 @@ List<String>? exportColorList(List<Color> colors) {
 }
 
 List<Color>? parseColorList(List<String> colors) {
-  if (colors == null) {
-    return null;
-  }
   List<Color> data = [];
   colors.forEach((element) {
     data.add(parseHexColor(element)!);
@@ -378,6 +375,7 @@ InputDecoration? parseInputDecoration(Map<String, dynamic>? map) {
     border: inputBorder,
     labelStyle: TextStyle(color: inputBorder.borderSide.color),
     focusedBorder: inputBorder,
+    enabledBorder: inputBorder,
   );
 }
 
