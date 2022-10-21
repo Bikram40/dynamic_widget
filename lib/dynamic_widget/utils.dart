@@ -301,7 +301,8 @@ String? getFontFamilyName(String? fontFamily) {
 }
 
 Map<String, dynamic>? exportOffset(Offset? offset) {
-  return <String, dynamic>{"dx": offset!.dx, "dy": offset.dy};
+  return DynamicWidgetBuilder.removeNullFromMap(
+      <String, dynamic>{"dx": offset!.dx, "dy": offset.dy});
 }
 
 Offset parseOffset(Map<String, dynamic>? offset) {
@@ -346,7 +347,7 @@ Map<String, dynamic>? exportTextStyle(TextStyle? textStyle) {
     return null;
   }
 
-  return <String, dynamic>{
+  return DynamicWidgetBuilder.removeNullFromMap(<String, dynamic>{
     "color": textStyle.color != null
         ? textStyle.color!.value.toRadixString(16)
         : null,
@@ -360,7 +361,7 @@ Map<String, dynamic>? exportTextStyle(TextStyle? textStyle) {
     "wordSpacing": textStyle.wordSpacing,
     "height": textStyle.height,
     "shadows": exportShadowList(textStyle.shadows)
-  };
+  });
 }
 
 InputDecoration? parseInputDecoration(Map<String, dynamic>? map) {
@@ -415,12 +416,12 @@ Map<String, dynamic>? exportInputDecoration(InputDecoration? inputDecoration) {
   if (inputDecoration == null) {
     return null;
   }
-  return <String, dynamic>{
+  return DynamicWidgetBuilder.removeNullFromMap(<String, dynamic>{
     "isDense": inputDecoration.isDense,
     "border": exportInputBorder(inputDecoration.border),
     "hintText": inputDecoration.hintText,
     "labelText": inputDecoration.labelText,
-  };
+  });
 }
 
 Map<String, dynamic>? exportInputBorder(InputBorder? inputBorder) {
@@ -433,7 +434,7 @@ Map<String, dynamic>? exportInputBorder(InputBorder? inputBorder) {
   if (inputBorder.runtimeType == OutlineInputBorder) {
     OutlineInputBorder border = inputBorder as OutlineInputBorder;
     BorderRadius borderRadius = border.borderRadius;
-    return <String, dynamic>{
+    return DynamicWidgetBuilder.removeNullFromMap(<String, dynamic>{
       "type": "OutlineInputBorder",
       "borderColor": border.borderSide.color != null
           ? border.borderSide.color.value.toRadixString(16)
@@ -441,12 +442,12 @@ Map<String, dynamic>? exportInputBorder(InputBorder? inputBorder) {
       "borderWidth": border.borderSide.width,
       "borderRadius":
           "${borderRadius.topLeft.x},${borderRadius.topRight.x},${borderRadius.bottomLeft.x},${borderRadius.bottomRight.x}",
-    };
+    });
   }
   if (inputBorder.runtimeType == UnderlineInputBorder) {
     UnderlineInputBorder border = inputBorder as UnderlineInputBorder;
     BorderRadius borderRadius = border.borderRadius;
-    return <String, dynamic>{
+    return DynamicWidgetBuilder.removeNullFromMap(<String, dynamic>{
       "type": "UnderlineInputBorder",
       "borderColor": border.borderSide.color != null
           ? border.borderSide.color.value.toRadixString(16)
@@ -454,7 +455,7 @@ Map<String, dynamic>? exportInputBorder(InputBorder? inputBorder) {
       "borderWidth": border.borderSide.width,
       "borderRadius":
           "${borderRadius.topLeft.x},${borderRadius.topRight.x},${borderRadius.bottomLeft.x},${borderRadius.bottomRight.x}",
-    };
+    });
   }
 }
 
@@ -471,7 +472,7 @@ Map<String, dynamic>? exportBoxDecoration(BoxDecoration? boxDecoration) {
   DecorationImage? decorationImage = boxDecoration.image;
   NetworkImage? image =
       decorationImage != null ? decorationImage.image as NetworkImage : null;
-  return <String, dynamic>{
+  return DynamicWidgetBuilder.removeNullFromMap(<String, dynamic>{
     "image": image != null ? image.url : null,
     "color": boxDecoration.color != null
         ? boxDecoration.color!.value.toRadixString(16)
@@ -484,7 +485,7 @@ Map<String, dynamic>? exportBoxDecoration(BoxDecoration? boxDecoration) {
     "border": border == null
         ? null
         : "${border.top.width},${border.top.color != null ? border.top.color.value.toRadixString(16) : null}",
-  };
+  });
 }
 
 BoxDecoration? parseBoxDecoration(Map<String, dynamic>? map) {
@@ -1285,11 +1286,11 @@ Map<String, dynamic>? exportDropCap(
   if (dropCap == null) {
     return null;
   }
-  return <String, dynamic>{
+  return DynamicWidgetBuilder.removeNullFromMap(<String, dynamic>{
     "width": dropCap.width,
     "height": dropCap.height,
     "child": DynamicWidgetBuilder.export(dropCap.child, buildContext),
-  };
+  });
 }
 
 String exportAlignmentDirectional(AlignmentDirectional alignmentDirectional) {
@@ -1376,11 +1377,15 @@ String exportAlignment(Alignment? alignment) {
 
 Map<String, dynamic> exportConstraints(BoxConstraints constraints) {
   return {
-    'minWidth': constraints.minWidth,
+    'minWidth': constraints.minWidth == double.infinity
+        ? infinity
+        : constraints.minWidth,
     'maxWidth': constraints.maxWidth == double.infinity
         ? infinity
         : constraints.maxWidth,
-    'minHeight': constraints.minHeight,
+    'minHeight': constraints.minHeight == double.infinity
+        ? infinity
+        : constraints.minHeight,
     'maxHeight': constraints.maxHeight == double.infinity
         ? infinity
         : constraints.maxHeight,

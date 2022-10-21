@@ -156,7 +156,7 @@ class DynamicWidgetBuilder {
     initDefaultParsersIfNess();
     var parser = _findMatchedWidgetParserForExport(widget);
     if (parser != null) {
-      return parser.export(widget, buildContext);
+      return removeNullFromMap(parser.export(widget, buildContext));
     }
     log.warning(
         "Can't find WidgetParser for Type ${widget.runtimeType} to export.");
@@ -171,6 +171,11 @@ class DynamicWidgetBuilder {
       rt.add(export(widget, buildContext));
     }
     return rt;
+  }
+
+  static Map<String, dynamic>? removeNullFromMap(Map<String, dynamic>? map) {
+    map?.removeWhere((key, value) => (value == null));
+    return map;
   }
 
   static WidgetParser? _findMatchedWidgetParserForExport(Widget? widget) {
