@@ -72,18 +72,18 @@ Map<String, dynamic>? exportIconGuessFavorMaterial2(IconData? iconData) {
 
 IconData? getIconGuessFavorMaterial2(Map<String, dynamic>? iconMap) {
   if (iconMap != null) {
+    var code;
     if (iconMap['fontFamily'] == 'MaterialIcons') {
-      var code = '0x' + iconMap['codePoint'].toString().toLowerCase();
-      return IconData(int.parse(code));
+      code = '0x' + iconMap['codePoint'].toString().toLowerCase();
     } else if (iconMap['fontFamily'] == 'FontAwesomeSolid') {
-      var code = '0x' + iconMap['codePoint'].toString().toLowerCase();
-      return IconData(
-        int.parse(code),
-        fontFamily: iconMap['fontFamily'],
-        fontPackage: iconMap['fontPackage'],
-        matchTextDirection: iconMap['matchTextDirection'],
-      );
+      code = '0x' + iconMap['codePoint'].toString().toLowerCase();
     }
+    return IconData(
+      int.parse(code),
+      fontFamily: iconMap['fontFamily'],
+      // fontPackage: iconMap['fontPackage'],
+      matchTextDirection: iconMap['matchTextDirection'],
+    );
   }
   return null;
 }
