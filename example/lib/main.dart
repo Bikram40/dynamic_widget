@@ -547,6 +547,11 @@ class DefaultClickListener implements ClickListener {
     // TODO: implement getTextEditingController
     throw UnimplementedError();
   }
+
+  @override
+  String getDynamicText(String? text) {
+    return text??'';
+  }
 }
 
 class JSONExporter extends StatefulWidget {

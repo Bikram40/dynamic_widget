@@ -23,7 +23,7 @@ class TextWidgetParser implements WidgetParser {
 
     if (textSpan == null) {
       return Text(
-        data!,
+        listener?.getDynamicText(data) ?? (data ?? ''),
         textAlign: parseTextAlign(textAlignString),
         overflow: parseTextOverflow(overflow),
         maxLines: maxLines,
