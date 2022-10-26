@@ -7,7 +7,7 @@ class IconWidgetParser extends WidgetParser {
   Widget parse(Map<String, dynamic> map, BuildContext buildContext,
       ClickListener? listener) {
     return Icon(
-      map.containsKey('data')
+      map.containsKey('data') && map['data'] is Map
           ? getIconGuessFavorMaterial2( map['data'])
           : Icons.android,
       size: map.containsKey("size") ? map['size']?.toDouble() : null,
