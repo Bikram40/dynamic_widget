@@ -103,7 +103,7 @@ class TextSpanParser {
   TextSpan parse(Map<String, dynamic> map, ClickListener? listener) {
     String? clickEvent = map.containsKey("recognizer") ? map['recognizer'] : "";
     var textSpan = TextSpan(
-        text: map['text'],
+        text: listener?.getDynamicText(map['text']) ?? (map['text'] ?? ''),
         style: parseTextStyle(map['style']),
         recognizer: TapGestureRecognizer()
           ..onTap = () {
