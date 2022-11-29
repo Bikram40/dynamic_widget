@@ -42,14 +42,18 @@ IconData? getIconGuessFavorMaterial({String? name}) {
 }
 
 String exportIconGuessFavorMaterial(IconData? iconData) {
-  for (var entry in materialIcons.entries) {
-    if (entry.value == iconData) {
-      return entry.key;
+  if (iconData!.fontFamily == 'MaterialIcons') {
+    for (var entry in materialIcons.entries) {
+      if (entry.value.codePoint == iconData.codePoint) {
+        return entry.key;
+      }
     }
   }
-  for (var entry in faIconNameMapping.entries) {
-    if (entry.value == iconData) {
-      return entry.key;
+  if (iconData.fontFamily == 'FontAwesomeSolid') {
+    for (var entry in faIconNameMapping.entries) {
+      if (entry.value.codePoint == iconData.codePoint) {
+        return entry.key;
+      }
     }
   }
   return "android";
@@ -58,10 +62,12 @@ String exportIconGuessFavorMaterial(IconData? iconData) {
 Map<String, dynamic>? exportIconGuessFavorMaterial2(IconData? iconData) {
   if (iconData != null) {
     return {
-      'codePoint': iconData
-          .toString()
-          .replaceAll('IconData(U+0', '')
-          .replaceAll(')', ''),
+      // 'codePoint': iconData
+      //     .toString()
+      //     .replaceAll('IconData(U+0', '')
+      //     .replaceAll(')', ''),
+      'codePoint': iconData.codePoint.toInt(),
+      'codePoint2': iconData.codePoint.toInt(),
       'fontFamily': iconData.fontFamily ?? '',
       'fontPackage': iconData.fontPackage ?? '',
       'matchTextDirection': iconData.matchTextDirection
@@ -78,10 +84,21 @@ IconData? getIconGuessFavorMaterial2(Map<String, dynamic>? iconMap) {
     } else if (iconMap['fontFamily'] == 'FontAwesomeSolid') {
       code = '0x' + iconMap['codePoint'].toString().toLowerCase();
     }
+    int iconDaint;
+    try {
+      iconDaint = int.parse(code);
+    } catch (e) {
+      iconDaint = Icons.add.codePoint;
+    }
     return IconData(
-      int.parse(code),
+      iconMap['codePoint2'] == null
+          ? (iconMap['codePoint'] is String)
+              ? iconDaint
+              : iconMap['codePoint']
+          : iconMap['codePoint2'],
       fontFamily: iconMap['fontFamily'],
-      // fontPackage: iconMap['fontPackage'],
+      fontPackage:
+          iconMap['fontPackage'].isEmpty ? null : iconMap['fontPackage'],
       matchTextDirection: iconMap['matchTextDirection'],
     );
   }

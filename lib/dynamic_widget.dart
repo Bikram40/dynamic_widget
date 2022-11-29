@@ -90,6 +90,7 @@ class DynamicWidgetBuilder {
     DynamicWidgetParser(),
     FlexibleWidgetParser(),
   ];
+  static BuildContext? context;
 
   static final _widgetNameParserMap = <String, WidgetParser>{};
 
@@ -122,6 +123,7 @@ class DynamicWidgetBuilder {
 
   static Widget? buildFromMap(Map<String, dynamic>? map,
       BuildContext buildContext, ClickListener? listener) {
+    context=buildContext;
     initDefaultParsersIfNess();
     if (map == null) {
       return null;
@@ -153,6 +155,7 @@ class DynamicWidgetBuilder {
 
   static Map<String, dynamic>? export(
       Widget? widget, BuildContext? buildContext) {
+    context = buildContext;
     initDefaultParsersIfNess();
     var parser = _findMatchedWidgetParserForExport(widget);
     if (parser != null) {
@@ -226,10 +229,6 @@ class NonResponseWidgetClickListener implements ClickListener {
     print("receiver click event: " + event);
   }
 
-  @override
-  TextEditingController getTextEditingController(String? data) {
-    return TextEditingController();
-  }
 
   @override
   String getDynamicText(String? text) {

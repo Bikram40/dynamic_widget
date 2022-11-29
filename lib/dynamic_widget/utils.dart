@@ -217,11 +217,11 @@ String exportFontWeight(FontWeight? fontWeight) {
 
 List<String>? exportColorList(List<Color> colors) {
   List<String> data = [];
-  if (colors == null) {
+  if (colors.isNotEmpty) {
     return null;
   }
   colors.forEach((element) {
-    data.add(element.value.toRadixString(16));
+    data.add(element.exportString!);
   });
   return data;
 }
@@ -238,12 +238,45 @@ Color? parseHexColor(String? hexColorString) {
   if (hexColorString == null) {
     return null;
   }
+  if (hexColorString == 'color_primary') {
+    if (DynamicWidgetBuilder.context != null) {
+      return Theme.of(DynamicWidgetBuilder.context!).colorScheme.primary;
+    } else {
+      return Colors.blue;
+    }
+  }
   hexColorString = hexColorString.toUpperCase().replaceAll("#", "");
   if (hexColorString.length == 6) {
     hexColorString = "FF" + hexColorString;
   }
   int colorInt = int.parse(hexColorString, radix: 16);
   return Color(colorInt);
+}
+
+String? exportColor(color) {
+  if (color != null) {
+    if (DynamicWidgetBuilder.context != null) {
+      return Theme.of(DynamicWidgetBuilder.context!).colorScheme.primary ==
+              color
+          ? 'color_primary'
+          : color.value.toRadixString(16);
+    }
+    return color.value.toRadixString(16);
+  } else {
+    return null;
+  }
+}
+
+extension colorUtil on Color? {
+  String? get exportString {
+    return exportColor(this);
+  }
+}
+
+extension colorUtil2 on MaterialColor? {
+  String? get exportString {
+    return exportColor(this);
+  }
 }
 
 List<Map<String, dynamic>>? exportShadowList(List<Shadow>? shadows) {
@@ -253,8 +286,7 @@ List<Map<String, dynamic>>? exportShadowList(List<Shadow>? shadows) {
   }
   shadows.forEach((element) {
     data.add(<String, dynamic>{
-      "color":
-          element.color != null ? element.color.value.toRadixString(16) : null,
+      "color": element.color.exportString,
       "offset": exportOffset(element.offset),
       "blurRadius": element.blurRadius
     });
@@ -348,9 +380,7 @@ Map<String, dynamic>? exportTextStyle(TextStyle? textStyle) {
   }
 
   return DynamicWidgetBuilder.removeNullFromMap(<String, dynamic>{
-    "color": textStyle.color != null
-        ? textStyle.color!.value.toRadixString(16)
-        : null,
+    "color": textStyle.color != null ? textStyle.color?.exportString : null,
     "debugLabel": textStyle.debugLabel,
     "decoration": exportTextDecoration(textStyle.decoration),
     "fontSize": textStyle.fontSize,
@@ -437,7 +467,7 @@ Map<String, dynamic>? exportInputBorder(InputBorder? inputBorder) {
     return DynamicWidgetBuilder.removeNullFromMap(<String, dynamic>{
       "type": "OutlineInputBorder",
       "borderColor": border.borderSide.color != null
-          ? border.borderSide.color.value.toRadixString(16)
+          ? border.borderSide.color.exportString
           : null,
       "borderWidth": border.borderSide.width,
       "borderRadius":
@@ -450,7 +480,7 @@ Map<String, dynamic>? exportInputBorder(InputBorder? inputBorder) {
     return DynamicWidgetBuilder.removeNullFromMap(<String, dynamic>{
       "type": "UnderlineInputBorder",
       "borderColor": border.borderSide.color != null
-          ? border.borderSide.color.value.toRadixString(16)
+          ? border.borderSide.color.exportString
           : null,
       "borderWidth": border.borderSide.width,
       "borderRadius":
@@ -474,9 +504,8 @@ Map<String, dynamic>? exportBoxDecoration(BoxDecoration? boxDecoration) {
       decorationImage != null ? decorationImage.image as NetworkImage : null;
   return DynamicWidgetBuilder.removeNullFromMap(<String, dynamic>{
     "image": image != null ? image.url : null,
-    "color": boxDecoration.color != null
-        ? boxDecoration.color!.value.toRadixString(16)
-        : null,
+    "color":
+        boxDecoration.color != null ? boxDecoration.color?.exportString : null,
     "boxFit":
         decorationImage != null ? exportBoxFit(decorationImage.fit) : null,
     "borderRadius":
@@ -484,7 +513,7 @@ Map<String, dynamic>? exportBoxDecoration(BoxDecoration? boxDecoration) {
     "boxShadow": exportShadowList(boxDecoration.boxShadow),
     "border": border == null
         ? null
-        : "${border.top.width},${border.top.color != null ? border.top.color.value.toRadixString(16) : null}",
+        : "${border.top.width},${border.top.color != null ? border.top.color.exportString : null}",
   });
 }
 

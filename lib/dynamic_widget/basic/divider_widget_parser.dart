@@ -16,7 +16,7 @@ class DividerWidgetParser extends WidgetParser{
       "indent": realWidget.indent,
       "endIndent": realWidget.endIndent,
       "color": realWidget.color != null
-          ? realWidget.color!.value.toRadixString(16): null,
+          ? realWidget.color?.exportString: null,
     };
 
   }

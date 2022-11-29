@@ -30,7 +30,7 @@ class PlaceholderWidgetParser extends WidgetParser {
     return <String, dynamic>{
       "type": widgetName,
       "color": realWidget.color != null
-          ? realWidget.color.value.toRadixString(16)
+          ? realWidget.color.exportString
           : "0xFF455A64",
       "strokeWidth": realWidget.strokeWidth,
       "fallbackWidth": realWidget.fallbackWidth,

@@ -31,8 +31,9 @@ class IconWidgetParser extends WidgetParser {
       "data": exportIconGuessFavorMaterial2(realWidget.icon),
       "size": realWidget.size,
       "color": realWidget.color != null
-          ? realWidget.color!.value.toRadixString(16)
+          ? realWidget.color?.exportString
           : null,
+      // "color": exportColor(realWidget.color),
       "semanticLabel": realWidget.semanticLabel,
       "textDirection": realWidget.textDirection != null
           ? exportTextDirection(realWidget.textDirection)

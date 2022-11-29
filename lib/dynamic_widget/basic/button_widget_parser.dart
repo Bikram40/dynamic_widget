@@ -16,10 +16,10 @@ class ElevatedButtonParser extends WidgetParser {
     var textStyle2 = realWidget.style?.textStyle != null ? realWidget.style?.textStyle?.resolve(MaterialState.values.toSet()) : null;
     return <String, dynamic>{
       "type": widgetName,
-      "foregroundColor": color !=null? color.value.toRadixString(16) : null,
-      "backgroundColor": backgroundColor !=null ? backgroundColor.value.toRadixString(16) : null,
-      "overlayColor": overlayColor !=null? overlayColor.value.toRadixString(16):null,
-      "shadowColor": shadowColor !=null? shadowColor.value.toRadixString(16) : null,
+      "foregroundColor": color !=null? color.exportString : null,
+      "backgroundColor": backgroundColor !=null ? backgroundColor.exportString : null,
+      "overlayColor": overlayColor !=null? overlayColor.exportString:null,
+      "shadowColor": shadowColor !=null? shadowColor.exportString : null,
       "elevation": elevation,
       "padding": edgeInsetsGeometry !=null? "${edgeInsetsGeometry.left},${edgeInsetsGeometry.top},${edgeInsetsGeometry.right},${edgeInsetsGeometry.bottom}": null,
       "textStyle": exportTextStyle(textStyle2),
