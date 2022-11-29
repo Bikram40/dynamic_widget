@@ -239,8 +239,8 @@ Color? parseHexColor(String? hexColorString) {
     return null;
   }
   if (hexColorString == 'color_primary') {
-    if (DynamicWidgetBuilder.context != null) {
-      return Theme.of(DynamicWidgetBuilder.context!).colorScheme.primary;
+    if (DynamicWidgetBuilder.clickListener != null) {
+      return DynamicWidgetBuilder.clickListener!.getThemeColor();
     } else {
       return Colors.blue;
     }
@@ -255,9 +255,8 @@ Color? parseHexColor(String? hexColorString) {
 
 String? exportColor(color) {
   if (color != null) {
-    if (DynamicWidgetBuilder.context != null) {
-      return Theme.of(DynamicWidgetBuilder.context!).colorScheme.primary ==
-              color
+    if (DynamicWidgetBuilder.clickListener != null) {
+      return DynamicWidgetBuilder.clickListener!.getThemeColor() == color
           ? 'color_primary'
           : color.value.toRadixString(16);
     }

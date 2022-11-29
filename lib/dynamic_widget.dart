@@ -33,6 +33,7 @@ import 'package:dynamic_widget/dynamic_widget/basic/wrap_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/gridview_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/listview_widget_parser.dart';
 import 'package:dynamic_widget/dynamic_widget/scrolling/pageview_widget_parser.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:logging/logging.dart';
 
@@ -90,7 +91,7 @@ class DynamicWidgetBuilder {
     DynamicWidgetParser(),
     FlexibleWidgetParser(),
   ];
-  static BuildContext? context;
+  static ClickListener? clickListener;
 
   static final _widgetNameParserMap = <String, WidgetParser>{};
 
@@ -123,7 +124,7 @@ class DynamicWidgetBuilder {
 
   static Widget? buildFromMap(Map<String, dynamic>? map,
       BuildContext buildContext, ClickListener? listener) {
-    context=buildContext;
+    clickListener = listener;
     initDefaultParsersIfNess();
     if (map == null) {
       return null;
@@ -154,8 +155,11 @@ class DynamicWidgetBuilder {
   }
 
   static Map<String, dynamic>? export(
-      Widget? widget, BuildContext? buildContext) {
-    context = buildContext;
+      Widget? widget, BuildContext? buildContext,
+      {ClickListener? listener}) {
+    if (listener != null) {
+      clickListener = listener;
+    }
     initDefaultParsersIfNess();
     var parser = _findMatchedWidgetParserForExport(widget);
     if (parser != null) {
@@ -167,11 +171,15 @@ class DynamicWidgetBuilder {
   }
 
   static List<Map<String, dynamic>?> exportWidgets(
-      List<Widget?> widgets, BuildContext? buildContext) {
+      List<Widget?> widgets, BuildContext? buildContext,
+      {ClickListener? listener}) {
+    if (listener != null) {
+      clickListener = listener;
+    }
     initDefaultParsersIfNess();
     List<Map<String, dynamic>?> rt = [];
     for (var widget in widgets) {
-      rt.add(export(widget, buildContext));
+      rt.add(export(widget, buildContext, listener: listener));
     }
     return rt;
   }
@@ -215,8 +223,13 @@ abstract class WidgetParser {
 
 abstract class ClickListener {
   void onClicked(String? event, {dynamic data});
-  String getDynamicText(String? text){
-    return text??'';
+
+  Color getThemeColor() {
+    return Colors.blue;
+  }
+
+  String getDynamicText(String? text) {
+    return text ?? '';
   }
 }
 
@@ -229,9 +242,13 @@ class NonResponseWidgetClickListener implements ClickListener {
     print("receiver click event: " + event);
   }
 
-
   @override
   String getDynamicText(String? text) {
-    return text??'';
+    return text ?? '';
+  }
+
+  @override
+  Color getThemeColor() {
+    return Colors.blue;
   }
 }

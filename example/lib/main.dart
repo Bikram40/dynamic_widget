@@ -552,6 +552,11 @@ class DefaultClickListener implements ClickListener {
   String getDynamicText(String? text) {
     return text??'';
   }
+
+  @override
+  Color getThemeColor() {
+    return Colors.blue;
+  }
 }
 
 class JSONExporter extends StatefulWidget {
