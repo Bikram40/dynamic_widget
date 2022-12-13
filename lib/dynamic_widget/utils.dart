@@ -917,48 +917,49 @@ BoxFit? parseBoxFit(String? boxFitString) {
   if (boxFitString == null) {
     return null;
   }
-
-  switch (boxFitString) {
-    case 'fill':
-      return BoxFit.fill;
-    case 'contain':
-      return BoxFit.contain;
-    case 'cover':
-      return BoxFit.cover;
-    case 'fitWidth':
-      return BoxFit.fitWidth;
-    case 'fitHeight':
-      return BoxFit.fitHeight;
-    case 'none':
-      return BoxFit.none;
-    case 'scaleDown':
-      return BoxFit.scaleDown;
-  }
+  return BoxFit.values[int.tryParse(boxFitString)??0];
+  //
+  // switch (boxFitString) {
+  //   case 'fill':
+  //     return BoxFit.fill;
+  //   case 'contain':
+  //     return BoxFit.contain;
+  //   case 'cover':
+  //     return BoxFit.cover;
+  //   case 'fitWidth':
+  //     return BoxFit.fitWidth;
+  //   case 'fitHeight':
+  //     return BoxFit.fitHeight;
+  //   case 'none':
+  //     return BoxFit.none;
+  //   case 'scaleDown':
+  //     return BoxFit.scaleDown;
+  // }
 
   return null;
 }
 
 String exportBoxFit(BoxFit? boxFit) {
-  String rt = "cover";
-  if (boxFit == BoxFit.fill) {
-    rt = "fill";
-  }
-  if (boxFit == BoxFit.cover) {
-    rt = "cover";
-  }
-  if (boxFit == BoxFit.fitWidth) {
-    rt = "fitWidth";
-  }
-  if (boxFit == BoxFit.fitHeight) {
-    rt = "fitHeight";
-  }
-  if (boxFit == BoxFit.none) {
-    rt = "none";
-  }
-  if (boxFit == BoxFit.scaleDown) {
-    rt = "scaleDown";
-  }
-  return rt;
+  // String rt = "cover";
+  // if (boxFit == BoxFit.fill) {
+  //   rt = "fill";
+  // }
+  // if (boxFit == BoxFit.cover) {
+  //   rt = "cover";
+  // }
+  // if (boxFit == BoxFit.fitWidth) {
+  //   rt = "fitWidth";
+  // }
+  // if (boxFit == BoxFit.fitHeight) {
+  //   rt = "fitHeight";
+  // }
+  // if (boxFit == BoxFit.none) {
+  //   rt = "none";
+  // }
+  // if (boxFit == BoxFit.scaleDown) {
+  //   rt = "scaleDown";
+  // }
+  return (boxFit?.index??0).toString();
 }
 
 ImageRepeat? parseImageRepeat(String? imageRepeatString) {
