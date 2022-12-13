@@ -247,7 +247,7 @@ Color? parseHexColor(String? hexColorString) {
   }
   hexColorString = hexColorString.toUpperCase().replaceAll("#", "");
   if (hexColorString.length == 6) {
-    hexColorString = "FF" + hexColorString;
+    hexColorString = "00" + hexColorString;
   }
   int colorInt = int.parse(hexColorString, radix: 16);
   return Color(colorInt);
