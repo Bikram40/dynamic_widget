@@ -418,6 +418,9 @@ InputBorder? parseInputBorder(Map<String, dynamic>? map) {
   double topRight = double.parse(radius[1]);
   double bottomLeft = double.parse(radius[2]);
   double bottomRight = double.parse(radius[3]);
+  if(map['type']=='none'){
+    return InputBorder.none;
+  }
   if (map['type'] == 'OutlineInputBorder') {
     return OutlineInputBorder(
         borderRadius: BorderRadius.only(
@@ -458,7 +461,9 @@ Map<String, dynamic>? exportInputBorder(InputBorder? inputBorder) {
     return null;
   }
   if (inputBorder == InputBorder.none) {
-    return null;
+    return {
+      "type":"none",
+    };
   }
   if (inputBorder.runtimeType == OutlineInputBorder) {
     OutlineInputBorder border = inputBorder as OutlineInputBorder;
