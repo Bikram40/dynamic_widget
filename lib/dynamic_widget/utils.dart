@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:ui';
 
 import 'package:dynamic_widget/dynamic_widget.dart';
@@ -413,14 +414,15 @@ InputBorder? parseInputBorder(Map<String, dynamic>? map) {
   if (map == null) {
     return null;
   }
+  if(map['type']=='none'){
+    return InputBorder.none;
+  }
   var radius = map['borderRadius'].toString().split(",");
   double topLeft = double.parse(radius[0]);
   double topRight = double.parse(radius[1]);
   double bottomLeft = double.parse(radius[2]);
   double bottomRight = double.parse(radius[3]);
-  if(map['type']=='none'){
-    return InputBorder.none;
-  }
+
   if (map['type'] == 'OutlineInputBorder') {
     return OutlineInputBorder(
         borderRadius: BorderRadius.only(
